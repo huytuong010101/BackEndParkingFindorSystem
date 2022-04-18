@@ -1,5 +1,5 @@
 from peewee import SqliteDatabase
-
+from datetime import datetime
 db = SqliteDatabase('database.db')
 
 if __name__ == "__main__":
@@ -23,6 +23,20 @@ if __name__ == "__main__":
         long=0,
         lat=0,
         node=node,
+    )
+    
+    record1 = ParkRecord.create(
+        park=park1,
+        time=datetime.now(),
+        image="https://i.imgur.com/qZImWfa.png",
+        num_of_empty_space=2,
+    )
+    
+    record2 = ParkRecord.create(
+        park=park2,
+        time=datetime.now(),
+        image="https://i.imgur.com/5xwsO1w.png",
+        num_of_empty_space=6,
     )
     # Close db
     db.close()
