@@ -4,6 +4,7 @@ from typing import Optional
 from .node_view import Node
 from views.PeeweeGetterDict import PeeweeGetterDict
 
+
 class Park(pydantic.BaseModel):
     id: int
     park_name: str
@@ -13,7 +14,7 @@ class Park(pydantic.BaseModel):
     open_close: Optional[time] = None
     close_time: Optional[time] = None
     node: Node
-    
+
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict

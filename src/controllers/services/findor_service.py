@@ -3,11 +3,12 @@ from models.park_record_model import ParkRecord
 from peewee import fn
 import math
 
+
 class FindorService:
     @staticmethod
     def get_park(page, num_per_page):
         return Park.select().paginate(page, num_per_page)
-    
+
     @staticmethod
     def find_park_available(long: float, lat: float, min_empty_space, page, num_per_page):
         results = list(
