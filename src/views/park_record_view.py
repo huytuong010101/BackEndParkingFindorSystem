@@ -10,6 +10,7 @@ class ParkRecord(pydantic.BaseModel):
     park: Park
     time: datetime
     image: str
+    num_of_empty_space: int
     
     class Config:
         orm_mode = True

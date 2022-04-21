@@ -36,6 +36,13 @@ if __name__ == "__main__":
         park=park2,
         time=datetime.now(),
         image="https://i.imgur.com/5xwsO1w.png",
+        num_of_empty_space=5,
+    )
+    
+    record3 = ParkRecord.create(
+        park=park2,
+        time=datetime.now(),
+        image="https://i.imgur.com/5xwsO1w.png",
         num_of_empty_space=6,
     )
     # Close db
