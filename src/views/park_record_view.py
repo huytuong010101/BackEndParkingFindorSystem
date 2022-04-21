@@ -12,6 +12,8 @@ class ParkRecord(pydantic.BaseModel):
     time: datetime
     image: str
     num_of_empty_space: int
+    distance: Optional[float] = None
+    
 
     class Config:
         orm_mode = True

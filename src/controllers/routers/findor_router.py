@@ -8,16 +8,22 @@ findor_router = APIRouter(
     tags=["Findor"],
 )
 
-
-@findor_router.get("/", response_model=List[Park])
-async def get_park(page: int = 1, num_per_page: int = 20):
+@findor_router.get("/park", response_model=List[Park])
+async def get_park(page:int = 1, num_per_page:int=20):
     parks = FindorService.get_park(page, num_per_page)
     return list(parks)
 
+@findor_router.get("/park:park_id", response_model=Park)
+async def get_park(park_id: int):
+    park = FindorService.get_park_by_id(park_id)
+    return park
+
+@findor_router.get("/park:park_id/park-record", response_model=ParkRecord)
+async def get_park(park_id: int):
+    park = FindorService.find_park_record(park_id)
+    return park
 
 @findor_router.get("/search", response_model=List[ParkRecord])
-async def seach_park(
-    long: float, lat: float, min_empty_space=1, page: int = 1, num_per_page: int = 20
-):
-    parks = FindorService.find_park(long, lat, min_empty_space, page, num_per_page)
+async def seach_park_record(long:float, lat: float, min_empty_space=1, page:int = 1, num_per_page:int=20):
+    parks = FindorService.find_park_available(long, lat, min_empty_space, page, num_per_page)
     return list(parks)
