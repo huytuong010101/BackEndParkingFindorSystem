@@ -11,8 +11,8 @@ PBL5 - Parking Findor System
 - `export PYTHONPATH=$(pwd)`
 - `python database/connection.py` (Just tun first time to init database and fake data)
 ## How to run?
-- `cd src`
-- `export PYTHONPATH=$(pwd)`
-- `python main.py [--port 0.0.0.0] [--host 8000]`
+```
+make run [PORT=8080] [HOST=127.0.0.1]
+```
 - Go to `host:port/docs` to testing API
 

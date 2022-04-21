@@ -15,3 +15,5 @@ typing_extensions==4.1.1
 uvicorn==0.17.6
 watchgod==0.8.2
 websockets==10.2
+boto3
+python-multipart
