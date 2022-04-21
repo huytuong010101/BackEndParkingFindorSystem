@@ -1,6 +1,7 @@
 from peewee import *
 from database.connection import db
 
+
 class Node(Model):
     id = AutoField()
     node_name = CharField(null=False)
@@ -11,4 +12,3 @@ class Node(Model):
 
     class Meta:
         database = db
-        

@@ -2,8 +2,8 @@ from unicodedata import name
 from controllers.datadef.node import CreateNodeData
 from models import Node
 
-class NodeService:
 
+class NodeService:
     @staticmethod
     def get_all_node():
         return Node.select()
@@ -15,7 +15,7 @@ class NodeService:
             address=data.address,
             token=data.token,
             long=data.long,
-            lat=data.lat
+            lat=data.lat,
         )
-        
+
         return node

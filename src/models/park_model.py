@@ -2,6 +2,7 @@ from peewee import *
 from database.connection import db
 from models import Node
 
+
 class Park(Model):
     id = AutoField()
     park_name = CharField(null=False)
@@ -14,4 +15,3 @@ class Park(Model):
 
     class Meta:
         database = db
-        
