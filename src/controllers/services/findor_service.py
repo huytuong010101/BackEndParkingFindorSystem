@@ -6,17 +6,18 @@ import math
 
 class FindorService:
     @staticmethod
-    def get_park(page, num_per_page):
-        return Park.select().paginate(page, num_per_page)
+    def get_park(name, page, num_per_page):
+        return Park.select().where(Park.park_name.contains(name)).paginate(page, num_per_page)
 
     @staticmethod
-    def find_park_available(long: float, lat: float, min_empty_space, page, num_per_page):
+    def find_park_available(long: float, lat: float, min_empty_space: int, page: int, num_per_page: int):
         results = list(
-            ParkRecord.select()
+            ParkRecord.select(ParkRecord, Park)
             .where(ParkRecord.num_of_empty_space >= min_empty_space)
-            .order_by(ParkRecord.time)
+            .join(Park)
             .group_by(ParkRecord.park)
             .paginate(page, num_per_page)
+            .having(ParkRecord.time == fn.MAX(ParkRecord.time))
         )
         for result in results:
             result.distance = math.sqrt((long - result.park.long)**2 + (lat - result.park.lat)**2)

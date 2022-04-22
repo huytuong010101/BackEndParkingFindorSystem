@@ -9,8 +9,8 @@ findor_router = APIRouter(
 )
 
 @findor_router.get("/park", response_model=List[Park])
-async def get_park(page:int = 1, num_per_page:int=20):
-    parks = FindorService.get_park(page, num_per_page)
+async def get_park(name:str="", page:int = 1, num_per_page:int=20):
+    parks = FindorService.get_park(name, page, num_per_page)
     return list(parks)
 
 @findor_router.get("/park:park_id", response_model=Park)
