@@ -6,11 +6,11 @@ import math
 
 class FindorService:
     @staticmethod
-    def get_park(page, num_per_page):
-        return Park.select().paginate(page, num_per_page)
+    def get_park(name, page, num_per_page):
+        return Park.select().where(Park.park_name.contains(name)).paginate(page, num_per_page)
 
     @staticmethod
-    def find_park_available(long: float, lat: float, min_empty_space, page, num_per_page):
+    def find_park_available(long: float, lat: float, min_empty_space: int, page: int, num_per_page: int):
         results = list(
             ParkRecord.select()
             .where(ParkRecord.num_of_empty_space >= min_empty_space)
