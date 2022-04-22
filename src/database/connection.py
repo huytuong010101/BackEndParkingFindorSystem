@@ -77,19 +77,6 @@ if __name__ == "__main__":
         num_of_empty_space=5,
     )
     
-    record1 = ParkRecord.create(
-        park=park1,
-        time=datetime.now(),
-        image="https://i.imgur.com/qZImWfa.png",
-        num_of_empty_space=2,
-    )
-
-    record2 = ParkRecord.create(
-        park=park2,
-        time=datetime.now(),
-        image="https://i.imgur.com/5xwsO1w.png",
-        num_of_empty_space=5,
-    )
     
     record3 = ParkRecord.create(
         park=park3,
@@ -98,6 +85,13 @@ if __name__ == "__main__":
         num_of_empty_space=1,
     )
 
+    record4 = ParkRecord.create(
+        park=park4,
+        time=datetime.now(),
+        image="https://i.ibb.co/19dHy6z/2.png",
+        num_of_empty_space=3,
+    )
+    
     record4 = ParkRecord.create(
         park=park4,
         time=datetime.now(),
