@@ -53,11 +53,13 @@ def create_new_record(
     time: datetime = Form(...),
     num_of_empty_space: int = Form(...),
 ):
+    file_name = file.filename + str(datetime.now())
     s3_client.upload_fileobj(
         file.file,
         "pbl5-vy",
-        file.filename + str(datetime.now()),
+        file_name,
         ExtraArgs={"ContentType": file.content_type},
-    )  
-    record = RecordService.create_record(_get_object_url(file.filename), park_id, time, num_of_empty_space)
+    )
+    record = RecordService.create_record(_get_object_url(
+        file_name), park_id, time, num_of_empty_space)
     return record
