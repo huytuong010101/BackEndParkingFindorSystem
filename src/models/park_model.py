@@ -1,6 +1,7 @@
 from peewee import *
 from database.connection import db
 from models import Node
+import datetime
 
 
 class Park(Model):
@@ -12,6 +13,7 @@ class Park(Model):
     open_close = TimeField(null=True)
     close_time = TimeField(null=True)
     node = ForeignKeyField(Node, on_delete="CASCADE")
+    disable_at = DateTimeField(null=True)
 
     class Meta:
         database = db
