@@ -7,6 +7,10 @@ class ParkService:
         return Park.select().where(Park.park_name.contains(name)).paginate(page, num_per_page)
     
     @staticmethod
+    def get_park_by_id(id: int) -> Park:
+        return Park.get_by_id(id)
+    
+    @staticmethod
     def update_park(id: int, data: dict):
         Park.update(**data).where(Park.id == id).execute()
         

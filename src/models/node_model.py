@@ -9,6 +9,7 @@ class Node(Model):
     token = CharField(null=True)
     long = FloatField(null=True)
     lat = FloatField(null=True)
+    disable_at = DateTimeField(null=True)
 
     class Meta:
         database = db
