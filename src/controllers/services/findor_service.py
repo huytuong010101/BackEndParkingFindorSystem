@@ -2,6 +2,7 @@ from models.park_model import Park
 from models.park_record_model import ParkRecord
 from peewee import fn
 import math
+import geopy.distance
 
 
 class FindorService:
@@ -20,7 +21,7 @@ class FindorService:
             .having(ParkRecord.time == fn.MAX(ParkRecord.time))
         )
         for result in results:
-            result.distance = math.sqrt((long - result.park.long)**2 + (lat - result.park.lat)**2)
+            result.distance = geopy.distance.distance((lat, long), (result.park.lat, result.park.long)).km
         results.sort(key=lambda item: item.distance)
         return results
     
