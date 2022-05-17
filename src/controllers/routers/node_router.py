@@ -1,6 +1,7 @@
-from fastapi import APIRouter, File, Form, UploadFile
-from controllers.datadef.node import CreateNodeData
+from fastapi import APIRouter, File, Form, UploadFile, status, HTTPException
+from controllers.datadef.node import CreateNodeData, UpdateNodeData
 from controllers.datadef.record import CreateRecordData
+from controllers.services.park_service import ParkService
 from controllers.services.record_service import RecordService
 from views import Node
 from typing import Dict, List
@@ -16,27 +17,21 @@ node_router = APIRouter(
 
 
 @node_router.get("/", response_model=List[Node])
-async def read_all_nodes():
-    nodes = NodeService.get_all_node()
+async def read_all_nodes(page: int = 1, num_per_page: int = 20):
+    nodes = NodeService.get_all_node(page, num_per_page)
     return list(nodes)
 
-
-@node_router.post("/register", response_model=Node)
+@node_router.post("/", response_model=Node)
 def register_new_node(data: CreateNodeData):
     return NodeService.create_node(data)
 
+@node_router.put("/{id}")
+def update_node(id: int, data: UpdateNodeData):
+    NodeService.update_node(id, data)
 
-@node_router.post("/upload-image")
-def upload_image(file: UploadFile):
-    print(file.content_type)
-    s3_client.upload_fileobj(
-        file.file,
-        "pbl5-vy",
-        file.filename + str(datetime.now()),
-        ExtraArgs={"ContentType": file.content_type},
-    )
-    return {"url": _get_object_url(file.filename)}
-
+@node_router.delete("/{id}")
+def delete_node(id: int):
+    NodeService.delete_node(id)
 
 def _get_object_url(object_name: str) -> str:
     return "https://s3-{0}.amazonaws.com/{1}/{2}".format(
@@ -46,13 +41,19 @@ def _get_object_url(object_name: str) -> str:
     )
 
 
-@node_router.post("/record", response_model=ParkRecord)
+# @node_router.post("/record", response_model=ParkRecord)
+@node_router.post("/record")
 def create_new_record(
     file: UploadFile = File(...),
     park_id: int = Form(...),
     time: datetime = Form(...),
     num_of_empty_space: int = Form(...),
+    token: str =  Form(...)
 ):
+    park = ParkService.get_park_by_id(park_id)
+    if park.node.token != token:
+        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Token is not valid") 
+
     file_name = file.filename + str(datetime.now())
     s3_client.upload_fileobj(
         file.file,

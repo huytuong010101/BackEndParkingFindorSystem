@@ -1,3 +1,4 @@
+from datetime import datetime
 import pydantic
 from typing import Optional
 from views.PeeweeGetterDict import PeeweeGetterDict
@@ -10,6 +11,7 @@ class Node(pydantic.BaseModel):
     token: Optional[str] = None
     long: Optional[float] = None
     lat: Optional[float] = None
+    disable_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
