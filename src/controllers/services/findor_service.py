@@ -1,7 +1,6 @@
 from models.park_model import Park
 from models.park_record_model import ParkRecord
-from peewee import fn
-import math
+from peewee import fn, SQL
 import geopy.distance
 
 
@@ -13,16 +12,16 @@ class FindorService:
     @staticmethod
     def find_park_available(long: float, lat: float, min_empty_space: int, page: int, num_per_page: int):
         results = list(
-            ParkRecord.select(ParkRecord, Park)
+            ParkRecord.select(ParkRecord, Park, (fn.ABS((Park.long - long)) + fn.ABS((Park.lat - lat))).alias("distance"))
             .where(ParkRecord.num_of_empty_space >= min_empty_space)
             .join(Park)
+            .order_by(SQL("distance"))
             .group_by(ParkRecord.park)
-            .paginate(page, num_per_page)
             .having(ParkRecord.time == fn.MAX(ParkRecord.time))
+            .paginate(page, num_per_page)
         )
         for result in results:
             result.distance = geopy.distance.distance((lat, long), (result.park.lat, result.park.long)).km
-        results.sort(key=lambda item: item.distance)
         return results
     
     @staticmethod
