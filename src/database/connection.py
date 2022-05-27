@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # db = SqliteDatabase("database.db")
 db = PostgresqlDatabase(os.environ["DB_NAME"], user=os.environ["DB_USERNAME"], password=os.environ["DB_PASSWORD"],
-                           host=os.environ["DB_HOST"], port=os.environ["DB_PORT"])
+                           host=os.environ["DB_HOST"], port=os.environ["DB_PORT"], autorollback=True)
 
 if __name__ == "__main__":
     # Create table
