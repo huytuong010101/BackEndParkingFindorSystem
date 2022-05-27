@@ -3,3 +3,4 @@ src/database.db
 venv
 .python-version
 env
+.env
