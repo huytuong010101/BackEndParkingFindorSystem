@@ -2,7 +2,7 @@ from datetime import datetime
 from unicodedata import name
 from controllers.datadef.node import CreateNodeData, UpdateNodeData
 from models import Node
-
+import uuid
 
 class NodeService:
     @staticmethod
@@ -14,7 +14,7 @@ class NodeService:
         node = Node.create(
             node_name=data.node_name,
             address=data.address,
-            token=data.token,
+            token=str(uuid.uuid4()),
             long=data.long,
             lat=data.lat,
         )

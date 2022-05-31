@@ -18,3 +18,5 @@ websockets==10.2
 boto3
 python-multipart
 geopy
+psycopg2
+pymysql

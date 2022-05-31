@@ -11,14 +11,16 @@ class FindorService:
 
     @staticmethod
     def find_park_available(long: float, lat: float, min_empty_space: int, page: int, num_per_page: int):
-        results = list(
-            ParkRecord.select(ParkRecord, Park, (fn.ABS((Park.long - long)) + fn.ABS((Park.lat - lat))).alias("distance"))
-            .where(ParkRecord.num_of_empty_space >= min_empty_space)
-            .join(Park)
-            .order_by(SQL("distance"))
-            .group_by(ParkRecord.park)
-            .having(ParkRecord.time == fn.MAX(ParkRecord.time))
+        sql = ParkRecord.select(ParkRecord, Park, (fn.ABS((Park.long - long)) + fn.ABS((Park.lat - lat))).alias("distance"))\
+            .where(ParkRecord.num_of_empty_space >= min_empty_space)\
+            .order_by(SQL("distance"))\
+            .group_by(ParkRecord.park)\
+            .join(Park)\
+            .having(ParkRecord.time == fn.MAX(ParkRecord.time))\
             .paginate(page, num_per_page)
+        print(sql)
+        results = list(
+            sql
         )
         for result in results:
             result.distance = geopy.distance.distance((lat, long), (result.park.lat, result.park.long)).km
