@@ -22,6 +22,10 @@ class NodeService:
         return node
     
     @staticmethod
+    def get_node_by_id(node_id: int):
+        return Node.get(node_id)
+    
+    @staticmethod
     def update_node(id: int, data: UpdateNodeData) -> Node:
         data = data.dict()
         # remove None field

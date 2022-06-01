@@ -21,6 +21,12 @@ async def read_all_nodes(page: int = 1, num_per_page: int = 20):
     nodes = NodeService.get_all_node(page, num_per_page)
     return list(nodes)
 
+
+@node_router.get("/{node_id}", response_model=Node)
+async def get_node(node_id: int):
+    node = NodeService.get_node_by_id(node_id)
+    return node
+
 @node_router.post("/", response_model=Node)
 def register_new_node(data: CreateNodeData):
     return NodeService.create_node(data)
