@@ -4,7 +4,7 @@ from datetime import datetime
 class ParkService:
     @staticmethod
     def get_park(name, page, num_per_page):
-        return Park.select().where(Park.park_name.contains(name)).paginate(page, num_per_page)
+        return Park.select().where(Park.park_name.contains(name), Park.disable_at.is_null()).paginate(page, num_per_page)
     
     @staticmethod
     def get_park_by_id(id: int) -> Park:
