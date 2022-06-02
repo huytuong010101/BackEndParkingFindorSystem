@@ -13,12 +13,12 @@ async def get_park(name:str="", page:int = 1, num_per_page:int=20):
     parks = FindorService.get_park(name, page, num_per_page)
     return list(parks)
 
-@findor_router.get("/:park_id", response_model=ParkView)
+@findor_router.get("/{park_id}", response_model=ParkView)
 async def get_park(park_id: int):
     park = FindorService.get_park_by_id(park_id)
     return park
 
-@findor_router.get("/:park_id/park-record", response_model=ParkRecord)
+@findor_router.get("/{park_id}/park-record", response_model=ParkRecord)
 async def get_park(park_id: int):
     park = FindorService.find_park_record(park_id)
     return park

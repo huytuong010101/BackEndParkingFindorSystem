@@ -13,7 +13,7 @@ async def get_park(name:str="", page:int = 1, num_per_page:int=20):
     parks = ParkService.get_park(name, page, num_per_page)
     return list(parks)
 
-@park_router.put("/:id", status_code=status.HTTP_204_NO_CONTENT)
+@park_router.put("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_park(id: int, data: ParkUpdate):
     try:
         ParkService.update_park(id, data.dict(exclude_none=True))
@@ -27,7 +27,7 @@ async def create_park(data: ParkCreate):
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE) 
     
-@park_router.delete("/:id", status_code=status.HTTP_204_NO_CONTENT)
+@park_router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_park(id: int):
     try:
         return ParkService.delete_park(id)
