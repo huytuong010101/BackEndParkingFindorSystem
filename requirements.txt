@@ -19,4 +19,4 @@ boto3
 python-multipart
 geopy
 psycopg2
-pymysql
+aiomysql
