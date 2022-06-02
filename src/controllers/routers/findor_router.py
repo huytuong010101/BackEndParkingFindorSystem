@@ -23,7 +23,8 @@ async def get_park(park_id: int):
     park = FindorService.find_park_record(park_id)
     return park
 
-@findor_router.get("/search", response_model=List[ParkRecord])
-async def seach_park_record(long:float, lat: float, min_empty_space=1, page:int = 1, num_per_page:int=20):
+@findor_router.post("/search", response_model=List[ParkRecord])
+async def seach_park_record(long:float, lat: float, min_empty_space:int=1, page:int = 1, num_per_page:int=20):
     parks = FindorService.find_park_available(long, lat, min_empty_space, page, num_per_page)
+    print(parks)
     return list(parks)
