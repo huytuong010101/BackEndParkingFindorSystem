@@ -11,8 +11,9 @@ class ParkBase(pydantic.BaseModel):
     address: Optional[str] = None
     long: Optional[float] = None
     lat: Optional[float] = None
-    open_close: Optional[time] = None
+    open_time: Optional[time] = None
     close_time: Optional[time] = None
+    price: int
     node: Node
 
     class Config:
@@ -28,8 +29,9 @@ class ParkCreate(ParkBase):
     address: Optional[str]
     long: Optional[float]
     lat: Optional[float]
-    open_close: Optional[time]
+    open_time: Optional[time]
     close_time: Optional[time]
+    price: int
     node: int
     
 class ParkUpdate(ParkBase):
@@ -37,6 +39,7 @@ class ParkUpdate(ParkBase):
     address: Optional[str]
     long: Optional[float]
     lat: Optional[float]
-    open_close: Optional[time]
+    open_time: Optional[time]
     close_time: Optional[time]
+    price: int
     node: Optional[int]
