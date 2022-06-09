@@ -10,10 +10,10 @@ class FindorService:
         return Park.select().where(Park.park_name.contains(name), Park.disable_at.is_null()).paginate(page, num_per_page)
 
     @staticmethod
-    def find_park_available(long: float, lat: float, min_empty_space: int, page: int, num_per_page: int):
+    def find_park_available(long: float, lat: float, min_empty_space: int, max_price:int, page: int, num_per_page: int):
         results = list(
             ParkRecord.select(ParkRecord, Park, (fn.ABS((Park.long - long)) + fn.ABS((Park.lat - lat))).alias("distance"))
-            .where(ParkRecord.num_of_empty_space >= min_empty_space, ParkRecord.park.disable_at.is_null())
+            .where(ParkRecord.num_of_empty_space >= min_empty_space, ParkRecord.park.disable_at.is_null(), ParkRecord.park.price <= max_price)
             .join(Park)
             .order_by(SQL("distance"))
             .group_by(ParkRecord.park)
