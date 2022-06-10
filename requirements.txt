@@ -20,3 +20,4 @@ python-multipart
 geopy
 psycopg2
 aiomysql
+python-jose[cryptography]
