@@ -1,6 +1,7 @@
-from fastapi import APIRouter, File, Form, UploadFile, status, HTTPException
+from fastapi import APIRouter, Depends, File, Form, UploadFile, status, HTTPException
 from controllers.datadef.node import CreateNodeData, UpdateNodeData
 from controllers.datadef.record import CreateRecordData
+from controllers.routers.auth_router import auth_login
 from controllers.services.park_service import ParkService
 from controllers.services.record_service import RecordService
 from views import Node
@@ -28,15 +29,15 @@ async def get_node(node_id: int):
     return node
 
 @node_router.post("/", response_model=Node)
-def register_new_node(data: CreateNodeData):
+def register_new_node(data: CreateNodeData, auth_login = Depends(auth_login)):
     return NodeService.create_node(data)
 
 @node_router.put("/{id}")
-def update_node(id: int, data: UpdateNodeData):
+def update_node(id: int, data: UpdateNodeData, auth_login = Depends(auth_login)):
     NodeService.update_node(id, data)
 
 @node_router.delete("/{id}")
-def delete_node(id: int):
+def delete_node(id: int, auth_login = Depends(auth_login)):
     NodeService.delete_node(id)
 
 def _get_object_url(object_name: str) -> str:
@@ -54,7 +55,7 @@ def create_new_record(
     park_id: int = Form(...),
     time: datetime = Form(...),
     num_of_empty_space: int = Form(...),
-    token: str =  Form(...)
+    token: str =  Form(...),
 ):
     park = ParkService.get_park_by_id(park_id)
     if park.node.token != token:
