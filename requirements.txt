@@ -5,7 +5,6 @@ fastapi==0.75.1
 h11==0.13.0
 httptools==0.4.0
 idna==3.3
-peewee==3.14.10
 pydantic==1.9.0
 python-dotenv==0.20.0
 PyYAML==6.0
@@ -21,3 +20,4 @@ geopy
 psycopg2
 aiomysql
 python-jose[cryptography]
+peewee-async
