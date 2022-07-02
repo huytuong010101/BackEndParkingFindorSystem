@@ -8,6 +8,7 @@ class RecordService:
     def create_record(
         image: str, park_id: int, time: datetime, num_of_empty_space: int
     ) -> ParkRecord:
+        ParkRecord.delete().where(park=park_id)
         record = ParkRecord.create(
             image=image, park=park_id, time=time, num_of_empty_space=num_of_empty_space
         )
