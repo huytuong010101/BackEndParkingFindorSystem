@@ -1,4 +1,4 @@
-from peewee import SqliteDatabase, PostgresqlDatabase, MySQLDatabase
+from peewee_async import MySQLDatabase
 from datetime import datetime
 import os
 from dotenv import load_dotenv
